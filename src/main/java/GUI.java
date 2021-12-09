@@ -73,6 +73,11 @@ public class GUI extends JPanel implements ActionListener {
     Item[] listSanke = new Item[MAX_TAIL];
     Item[] listEggs = new Item[MAX_EGGS];
 
+    /** ToDO
+    *   Score fehlt noch
+    */
+    private int score = 0;
+
 
     public GUI() {
 
