@@ -13,6 +13,7 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import java.text.NumberFormat;
 
 public class GUI extends JPanel implements ActionListener {
 
@@ -38,9 +39,9 @@ public class GUI extends JPanel implements ActionListener {
     private final int MAX_EGGS = 50;
     private final int MIN_TAIL = 3;
     private final int ITEM_SIZE = 25;
-    private final int MIN_DELAY = 50;
-    private final int MAX_DELAY = 300;
-    private final int EGG_COUNTER = 5;
+    private final int MIN_DELAY = 10;
+    private final int MAX_DELAY = 290;
+    private final int EGG_COUNTER = 10;
 
     private final int EGG_EMPTY = 0;
     private final int EGG_TAIL_ADD = 1;
@@ -182,10 +183,21 @@ public class GUI extends JPanel implements ActionListener {
         Toolkit.getDefaultToolkit().sync();
 
 
+        drawPoints(g);
+
         if (crash) {
             g.drawImage(crashHead, listSanke[1].x, listSanke[1].y, this);
             gameOver(g);
         }
+    }
+
+    private void drawPoints(Graphics g) {
+        String msg = "Points: " + NumberFormat.getIntegerInstance().format(score) + " Speed: " + ( 300 - delay );
+        Font font = new Font("Helvetica", Font.BOLD, 12);
+        FontMetrics metr = getFontMetrics(font);
+        g.setColor(Color.white);
+        g.setFont(font);
+        g.drawString(msg, 12, 12 );
     }
 
 
@@ -257,12 +269,12 @@ public class GUI extends JPanel implements ActionListener {
                             break;
                         case EGG_SPEED_ADD:
                             if (delay < MAX_DELAY)
-                                delay += 20;
+                                delay += 5;
                             timer.setInitialDelay(delay);
                             break;
                         case EGG_SPEED_SUB:
                             if (delay > MIN_DELAY)
-                                delay -= 20;
+                                delay -= 5;
                             timer.setInitialDelay(delay);
                             break;
                     }
@@ -295,6 +307,8 @@ public class GUI extends JPanel implements ActionListener {
                 counterEgg = EGG_COUNTER;
                 dropEgg();
             }
+
+            score += sizeTail - 2;
 
             checkEgg();
 
